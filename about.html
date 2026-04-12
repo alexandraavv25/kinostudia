@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINOSTUDIAAA* — About</title>
+  <meta name="description" content="KINOSTUDIAAA* — a women-led film studio developing narrative and documentary productions." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">KINOSTUDIAAA*</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="founder.html">Founder</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="page-header">
+      <h1>Manifesto</h1>
+    </div>
+
+    <div class="manifesto-body">
+
+      <p class="large">
+        KINOSTUDIAAA* is a women-led film studio developing narrative and
+        documentary productions with a focus on politically and socially
+        repressed communities.
+      </p>
+
+      <p>
+        The name is intentional. Drawn from the Russian <em>kinostudia</em>
+        (film studio), the feminine grammatical ending signals what the studio
+        stands for: a space built by women, for stories that have been
+        consistently underfunded, undervalued, and underheard. The three A's
+        represent insistence — we are here, we exist.
+      </p>
+
+      <p>
+        KINOSTUDIAAA* operates at the intersection of creative production and
+        cultural strategy. It develops original narrative and documentary
+        productions and positions them for international visibility through
+        narrative development, strategic partnerships, and cultural programming.
+        Its projects are grounded in feminist authorship, emotional rigour, and
+        a commitment to narrative ownership: the belief that communities should
+        control the stories told about them and profit from the value those
+        stories create.
+      </p>
+
+      <p>Paris, 2026</p>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 KINOSTUDIAAA*</span>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+
+</body>
+</html>

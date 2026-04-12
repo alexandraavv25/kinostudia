@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publication Title — KINOSTUDIAAA*</title>
+  <meta name="description" content="A short description of the piece and what it addresses." />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="../index.html" class="nav-logo">KINOSTUDIAAA*</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Work</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../founder.html">Founder</a></li>
+      <li><a href="../publications.html" class="active">Publications</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <a href="../publications.html" class="pub-back">← Publications</a>
+
+    <div class="pub-detail-layout">
+
+      <!-- LEFT: Meta + download -->
+      <div class="pub-detail-meta">
+
+        <p class="pub-detail-title">Publication Title</p>
+
+        <div class="pub-meta-row">
+          <span class="meta-label">Year</span>
+          <span class="meta-value">2025</span>
+        </div>
+
+        <div class="pub-meta-row">
+          <span class="meta-label">Published in</span>
+          <span class="meta-value">Journal / Publisher / Platform</span>
+        </div>
+
+        <div class="pub-meta-row">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Essay</span>
+        </div>
+
+        <!--
+          PDF DOWNLOAD LINK
+          ─────────────────
+          1. Add your PDF to /assets/pdfs/
+          2. Update the href below to match the filename
+          e.g. href="../assets/pdfs/your-publication.pdf"
+        -->
+        <a href="../assets/pdfs/example-publication.pdf"
+           class="pub-download"
+           download>
+          Download PDF
+        </a>
+        <span class="pub-download-note">PDF · [X] MB</span>
+
+      </div>
+
+      <!-- RIGHT: Recap / body text -->
+      <div class="pub-detail-body">
+
+        <p>
+          [Write a short recap of the publication here — 2 to 4 paragraphs.
+          This could be an abstract, an excerpt, or a summary of what the
+          piece is about, why it was written, and where it was published.]
+        </p>
+
+        <p>
+          [Second paragraph — context, argument, or key ideas explored
+          in the piece.]
+        </p>
+
+        <p>
+          [Optional third paragraph — reception, relevance, or a note
+          on how this fits into KINOSTUDIAAA*'s broader work.]
+        </p>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 KINOSTUDIAAA*</span>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+
+</body>
+</html>

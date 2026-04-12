@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINOSTUDIAAA* — Founder</title>
+  <meta name="description" content="Alex Mesherina — Founder of KINOSTUDIAAA*" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">KINOSTUDIAAA*</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="founder.html" class="active">Founder</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="page-header">
+      <h1>Founder</h1>
+    </div>
+
+    <div class="founder-layout">
+
+      <!-- Portrait -->
+      <div class="founder-image placeholder">
+        <span class="placeholder-label">Portrait</span>
+      </div>
+
+      <!-- Bio -->
+      <div class="founder-info">
+        <h2>Alex Mesherina</h2>
+        <p class="founder-role">Founder, KINOSTUDIAAA*</p>
+
+        <div class="founder-bio">
+          <p>
+            Alex Mesherina works in film development and the international
+            distribution of cultural projects. Her practice combines creative
+            production with business strategy — with a focus on how films are
+            positioned, financed, and brought to international audiences.
+          </p>
+        </div>
+
+        <div class="founder-details">
+
+          <div class="founder-details-row">
+            <span class="label">Based</span>
+            <span class="value">Paris, France</span>
+          </div>
+
+          <div class="founder-details-row">
+            <span class="label">Education</span>
+            <span class="value">
+              Global BBA, ESSEC Business School (2027)<br />
+              Film Production, 3is Paris (2023)
+            </span>
+          </div>
+
+          <div class="founder-details-row">
+            <span class="label">Experience</span>
+            <span class="value">
+              Publicis Conseil (2026)<br />
+              INSIDE Records (2025)<br />
+              Creator Camp (2024)
+            </span>
+          </div>
+
+          <div class="founder-details-row">
+            <span class="label">Languages</span>
+            <span class="value">English, French, Russian, Spanish, Portuguese, Moroccan Darija</span>
+          </div>
+
+          <div class="founder-details-row">
+            <span class="label">Contact</span>
+            <span class="value">
+              <a href="contact.html" style="color: var(--red);">Send a message →</a>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 KINOSTUDIAAA*</span>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+
+</body>
+</html>

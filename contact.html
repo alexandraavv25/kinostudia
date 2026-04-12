@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINOSTUDIAAA* — Contact</title>
+  <meta name="description" content="Get in touch with KINOSTUDIAAA*" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">KINOSTUDIAAA*</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="founder.html">Founder</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="page-header">
+      <h1>Contact</h1>
+    </div>
+
+    <div class="contact-layout">
+
+      <!-- Info -->
+      <div class="contact-info">
+        <h2>
+          Commissions, collaborations,<br />
+          and general inquiries.
+        </h2>
+
+        <div class="contact-block">
+          <p class="contact-label">Email</p>
+          <a href="mailto:alexmesherina@gmail.com">alexmesherina@gmail.com</a>
+        </div>
+
+        <div class="contact-block">
+          <p class="contact-label">Instagram</p>
+          <a href="https://instagram.com/kinostudiaaa" target="_blank" rel="noopener">
+            @kinostudiaaa
+          </a>
+        </div>
+
+        <div class="contact-block">
+          <p class="contact-label">Based</p>
+          <p>Paris, France</p>
+        </div>
+
+        <div class="contact-block" style="margin-top: 3rem;">
+          <p class="contact-label">Availability</p>
+          <p style="font-size: 0.85rem; color: var(--dark);">
+            Currently accepting commissions for 2026.
+          </p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <!--
+        NOTE: This form requires a backend or a form service to function.
+        Options: Netlify Forms, Formspree, EmailJS, or a custom server.
+
+        For Netlify: add  data-netlify="true"  to the <form> tag.
+        For Formspree: change action to "https://formspree.io/f/YOUR_ID"
+      -->
+      <form class="contact-form" action="#" method="POST">
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="" disabled selected>Select a topic</option>
+            <option value="commission">Commission inquiry</option>
+            <option value="collaboration">Collaboration</option>
+            <option value="press">Press / Editorial</option>
+            <option value="exhibition">Exhibition / Screening</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn">Send Message</button>
+        </div>
+
+      </form>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 KINOSTUDIAAA*</span>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+
+</body>
+</html>

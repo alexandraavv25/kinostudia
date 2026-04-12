@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINOSTUDIAAA* — Publications</title>
+  <meta name="description" content="Writing, criticism, and published work by KINOSTUDIAAA*" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-logo">KINOSTUDIAAA*</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="founder.html">Founder</a></li>
+      <li><a href="publications.html" class="active">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="page-header">
+      <h1>Publications</h1>
+    </div>
+
+    <div class="publications-list">
+
+      <!--
+        HOW TO ADD A PUBLICATION
+        ────────────────────────
+        1. Duplicate one <a class="publication-item"> block below
+        2. Set href="pub/your-slug.html"
+        3. Create that file by copying pub/example-publication.html
+        4. Drop the PDF in assets/pdfs/ and update the href inside that file
+      -->
+
+      <!-- EXAMPLE: first item is wired to a detail page -->
+      <a href="pub/example-publication.html" class="publication-item">
+        <span class="pub-year">2025</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Essay</span>
+      </a>
+
+      <!-- Remaining items — add href="pub/slug.html" when pages are ready -->
+      <a href="#" class="publication-item">
+        <span class="pub-year">2024</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Interview</span>
+      </a>
+
+      <a href="#" class="publication-item">
+        <span class="pub-year">2024</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Criticism</span>
+      </a>
+
+      <a href="#" class="publication-item">
+        <span class="pub-year">2023</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Essay</span>
+      </a>
+
+      <a href="#" class="publication-item">
+        <span class="pub-year">2023</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Catalogue</span>
+      </a>
+
+      <a href="#" class="publication-item">
+        <span class="pub-year">2022</span>
+        <div class="pub-body">
+          <p class="pub-title">Publication Title</p>
+          <p class="pub-source">Journal / Publisher / Platform</p>
+          <p class="pub-desc">A short description of the piece and what it addresses.</p>
+        </div>
+        <span class="pub-tag">Interview</span>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 KINOSTUDIAAA*</span>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+
+</body>
+</html>
