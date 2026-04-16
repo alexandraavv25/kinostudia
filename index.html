@@ -4,246 +4,510 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KINOSTUDIAAA*</title>
-
+  <meta name="description" content="KINOSTUDIAAA* — a women-led film studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --cream: #F0EDE4;
-      --red: #8B0000;
+      --red:   #8B0000;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
       background: var(--red);
       font-family: 'Space Grotesk', sans-serif;
+      /* Asterisk cursor */
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='22' font-family='serif' font-weight='bold' fill='%23F0EDE4' text-anchor='middle'%3E*%3C/text%3E%3C/svg%3E") 12 12, default;
     }
 
+    /* Grain overlay */
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed; inset: 0; z-index: 5;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-      opacity: 0.4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      background-size: 256px;
+      opacity: 0.5;
       mix-blend-mode: overlay;
     }
 
+    /* Fixed UI */
     .site-title {
       position: fixed;
-      top: 2rem; left: 2rem;
+      top: 2rem; left: 2.5rem;
+      z-index: 100;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--cream);
       text-decoration: none;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.2s forwards;
     }
 
-    .map-container {
+    .drag-hint {
       position: fixed;
-      inset: 0;
+      bottom: 2rem; right: 2.5rem;
+      z-index: 100;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240, 237, 228, 0.35);
+      opacity: 0;
+      animation: fadeIn 1s ease 2.5s forwards;
+    }
+
+    /* Map container */
+    .map-container {
+      position: fixed; inset: 0; z-index: 10;
       overflow: hidden;
-      cursor: grab;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='22' font-family='serif' font-weight='bold' fill='%23F0EDE4' text-anchor='middle'%3E*%3C/text%3E%3C/svg%3E") 12 12, grab;
+    }
+    .map-container.is-dragging {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='22' font-family='serif' font-weight='bold' fill='%23F0EDE4' text-anchor='middle'%3E*%3C/text%3E%3C/svg%3E") 12 12, grabbing;
     }
 
-    .map-container:active {
-      cursor: grabbing;
-    }
-
+    /* Pannable canvas */
     .map-canvas {
       position: absolute;
       width: 1800px;
       height: 1100px;
+      will-change: transform;
+      user-select: none;
     }
+    .map-canvas svg { width: 100%; height: 100%; overflow: visible; }
 
-    svg { width: 100%; height: 100%; }
-
+    /* Lines */
     .ml {
       stroke: var(--cream);
-      stroke-width: 0.6;
-      opacity: 0.3;
+      stroke-width: 0.65;
       fill: none;
+      opacity: 0;
+      stroke-dasharray: 700;
+      stroke-dashoffset: 700;
+      animation: drawLine 1.3s cubic-bezier(0.4,0,0.2,1) forwards;
+      transition: opacity 0.3s ease, stroke-width 0.3s ease;
     }
+    .ml.faint {
+      animation: drawLineFaint 1.8s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    .ml.lit { opacity: 0.8 !important; stroke-width: 1.1 !important; }
 
+    @keyframes drawLine      { to { stroke-dashoffset: 0; opacity: 0.38; } }
+    @keyframes drawLineFaint { to { stroke-dashoffset: 0; opacity: 0.13; } }
+
+    /* Nodes */
     .mn {
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='22' font-family='serif' font-weight='bold' fill='%23F0EDE4' text-anchor='middle'%3E*%3C/text%3E%3C/svg%3E") 12 12, pointer;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 0.22s ease;
     }
+    .mn:hover { transform: scale(1.1); }
 
-    .mn:hover {
-      transform: scale(1.1);
+    .mn circle.dot {
+      fill: var(--cream);
+      opacity: 0.55;
+      transition: opacity 0.22s ease, r 0.22s ease;
     }
+    .mn:hover circle.dot { opacity: 1; }
 
-    .mn text {
+    .mn .lbl {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      fill: var(--cream);
+      opacity: 0.6;
       pointer-events: none;
+      transition: opacity 0.22s;
     }
-
-    .dot {
-      fill: var(--cream);
-      opacity: 0.7;
-    }
-
-    .lbl {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      fill: var(--cream);
-    }
-
-    .sub {
+    .mn .sub {
+      font-family: 'DM Sans', sans-serif;
       font-size: 8px;
+      letter-spacing: 0.05em;
       fill: var(--cream);
-      opacity: 0.4;
+      opacity: 0.3;
+      pointer-events: none;
+      transition: opacity 0.22s;
+    }
+    .mn:hover .lbl { opacity: 1; }
+    .mn:hover .sub  { opacity: 0.55; }
+
+    /* Centre node */
+    .mn.centre circle.dot { opacity: 0.9; }
+    .mn.centre .lbl {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      opacity: 0.88;
+    }
+
+    /* Pulse ring */
+    .pulse {
+      fill: none;
+      stroke: var(--cream);
+      stroke-width: 0.5;
+      opacity: 0;
+      pointer-events: none;
+      animation: pulseRing 4s ease-out 2s infinite;
+    }
+    @keyframes pulseRing {
+      0%   { r: 5;  opacity: 0.28; }
+      100% { r: 32; opacity: 0; }
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Mobile list */
+    .map-mobile {
+      display: none;
+      position: fixed; inset: 0; z-index: 20;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 2.5rem 3rem;
+      background: var(--red);
+    }
+
+    .mob-node {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      width: 100%;
+      max-width: 270px;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(240,237,228,0.12);
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .mob-node:first-child { border-top: 1px solid rgba(240,237,228,0.12); }
+
+    .mob-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(240,237,228,0.45);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .mob-node:hover .mob-dot { background: var(--cream); }
+
+    .mob-lbl {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,237,228,0.75);
+    }
+    .mob-sub {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      color: rgba(240,237,228,0.32);
+      margin-top: 0.1rem;
     }
 
     @media (max-width: 680px) {
       .map-container { display: none; }
-
-      .map-mobile {
-        display: flex;
-        flex-direction: column;
-        padding: 3rem;
-        gap: 1rem;
-      }
-
-      .map-mobile a {
-        color: var(--cream);
-        text-decoration: none;
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-      }
+      .map-mobile    { display: flex; }
+      .drag-hint     { display: none; }
     }
   </style>
 </head>
-
 <body>
 
-<a href="index.html" class="site-title">KINOSTUDIAAA*</a>
+  <a href="index.html" class="site-title">KINOSTUDIAAA*</a>
+  <span class="drag-hint">drag to explore</span>
 
-<div class="map-container" id="mapContainer">
-  <div class="map-canvas" id="mapCanvas">
+  <!-- DESKTOP: pannable constellation map -->
+  <div class="map-container" id="mapContainer">
+    <div class="map-canvas" id="mapCanvas">
+      <svg viewBox="0 0 1800 1100" xmlns="http://www.w3.org/2000/svg">
 
-    <svg viewBox="0 0 1800 1100">
+        <!-- Lines -->
+        <line id="l-films"        class="ml"       x1="900" y1="548" x2="1180" y2="302" style="animation-delay:0.30s"/>
+        <line id="l-instagram"    class="ml"       x1="1180" y1="302" x2="1428" y2="222" style="animation-delay:0.65s"/>
+        <line id="l-publications" class="ml"       x1="900" y1="548" x2="1252" y2="714" style="animation-delay:0.35s"/>
+        <line id="l-notes"        class="ml"       x1="900" y1="548" x2="552" y2="316" style="animation-delay:0.28s"/>
+        <line id="l-reels"        class="ml"       x1="552" y1="316" x2="388" y2="570" style="animation-delay:0.60s"/>
+        <line id="l-linkedin"     class="ml"       x1="900" y1="548" x2="658" y2="758" style="animation-delay:0.32s"/>
+        <line id="l-nights"       class="ml"       x1="900" y1="548" x2="984" y2="856" style="animation-delay:0.40s"/>
+        <line id="l-cross-1"      class="ml faint" x1="552" y1="316" x2="1252" y2="714" style="animation-delay:1.50s"/>
+        <line id="l-cross-2"      class="ml faint" x1="658" y1="758" x2="1180" y2="302" style="animation-delay:1.70s"/>
 
-      <!-- lines -->
-      <line class="ml" x1="900" y1="548" x2="1180" y2="302"/>
-      <line class="ml" x1="1180" y1="302" x2="1428" y2="222"/>
-      <line class="ml" x1="900" y1="548" x2="1252" y2="714"/>
-      <line class="ml" x1="900" y1="548" x2="552" y2="316"/>
-      <line class="ml" x1="552" y1="316" x2="388" y2="570"/>
-      <line class="ml" x1="900" y1="548" x2="658" y2="758"/>
-      <line class="ml" x1="900" y1="548" x2="984" y2="856"/>
+        <!-- Nodes -->
 
-      <!-- centre -->
-      <g class="mn">
-        <circle class="dot" cx="900" cy="548" r="4"/>
-        <text class="lbl" x="900" y="530" text-anchor="middle">KINOSTUDIAAA*</text>
-      </g>
+        <!-- CENTRE -->
+        <g class="mn centre" data-node="centre" style="animation-delay:0.12s">
+          <circle class="pulse" cx="900" cy="548" r="5"/>
+          <circle class="dot"   cx="900" cy="548" r="4"/>
+          <text class="lbl" x="900" y="533" text-anchor="middle">KINOSTUDIAAA*</text>
+        </g>
 
-      <!-- films -->
-      <a href="/films.html">
-        <g class="mn">
+        <!-- FILMS -->
+        <g class="mn" data-node="films" data-line="l-films" style="animation-delay:0.72s">
+        <li><a href="films.html">films</a></li>
           <circle class="dot" cx="1180" cy="302" r="3"/>
-          <text class="lbl" x="1195" y="297">*films</text>
-          <text class="sub" x="1195" y="310">short films · mv</text>
+          <text class="lbl" x="1193" y="297" text-anchor="start">*films</text>
+          <text class="sub" x="1193" y="311" text-anchor="start">short films · mv</text>
         </g>
-      </a>
 
-      <!-- instagram -->
-      <a href="https://instagram.com/kinostudiaaa" target="_blank">
-        <g class="mn">
+        <!-- INSTAGRAM -->
+        <g class="mn" data-node="instagram" data-line="l-instagram" data-external="true" style="animation-delay:1.00s">
           <circle class="dot" cx="1428" cy="222" r="3"/>
-          <text class="lbl" x="1445" y="217">*instagram</text>
-          <text class="sub" x="1445" y="230">portfolio · events</text>
+          <text class="lbl" x="1441" y="217" text-anchor="start">*instagram</text>
+          <text class="sub" x="1441" y="231" text-anchor="start">portfolio · events · community</text>
         </g>
-      </a>
 
-      <!-- publications -->
-      <a href="/publications.html">
-        <g class="mn">
+        <!-- PUBLICATIONS -->
+        <g class="mn" data-node="publications" data-line="l-publications" style="animation-delay:0.78s">
           <circle class="dot" cx="1252" cy="714" r="3"/>
-          <text class="lbl" x="1265" y="710">*publications</text>
-          <text class="sub" x="1265" y="724">digital zines</text>
+          <text class="lbl" x="1265" y="709" text-anchor="start">*publications</text>
+          <text class="sub" x="1265" y="723" text-anchor="start">digital zines</text>
         </g>
-      </a>
 
-      <!-- notes -->
-      <a href="https://youtube.com/@alexmesherina" target="_blank">
-        <g class="mn">
+        <!-- NOTES -->
+        <g class="mn" data-node="notes" data-line="l-notes" data-external="true" style="animation-delay:0.68s">
           <circle class="dot" cx="552" cy="316" r="3"/>
-          <text class="lbl" x="535" y="306" text-anchor="end">*notes</text>
-          <text class="sub" x="535" y="320" text-anchor="end">podcast</text>
+          <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
+          <text class="sub" x="539" y="320" text-anchor="end">founder podcast</text>
         </g>
-      </a>
 
-      <!-- reels -->
-      <a href="https://instagram.com/alexmesherina" target="_blank">
-        <g class="mn">
+        <!-- REELS -->
+        <g class="mn" data-node="reels" data-line="l-reels" data-external="true" style="animation-delay:0.95s">
           <circle class="dot" cx="388" cy="570" r="3"/>
-          <text class="lbl" x="370" y="560" text-anchor="end">*reels</text>
-          <text class="sub" x="370" y="574" text-anchor="end">bts</text>
+          <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
+          <text class="sub" x="375" y="574" text-anchor="end">founder bts</text>
         </g>
-      </a>
 
-      <!-- linkedin -->
-      <a href="https://linkedin.com/company/kinostudiaaa" target="_blank">
-        <g class="mn">
+        <!-- LINKEDIN -->
+        <g class="mn" data-node="linkedin" data-line="l-linkedin" data-external="true" style="animation-delay:0.72s">
           <circle class="dot" cx="658" cy="758" r="3"/>
-          <text class="lbl" x="640" y="748" text-anchor="end">*linkedin</text>
-          <text class="sub" x="640" y="762" text-anchor="end">updates</text>
+          <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
+          <text class="sub" x="645" y="762" text-anchor="end">manifesto · updates</text>
         </g>
-      </a>
 
-      <!-- nights -->
-      <a href="mailto:alexmesherina@gmail.com">
-        <g class="mn">
+        <!-- NIGHTS -->
+        <g class="mn" data-node="nights" data-line="l-nights" style="animation-delay:0.85s">
           <circle class="dot" cx="984" cy="856" r="3"/>
           <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
-          <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
+          <text class="sub" x="984" y="888" text-anchor="middle">in-person screenings</text>
         </g>
-      </a>
 
-    </svg>
+      </svg>
+    </div>
   </div>
-</div>
 
-<!-- mobile -->
-<div class="map-mobile">
-  <a href="/films.html">*films</a>
-  <a href="/publications.html">*publications</a>
-  <a href="https://youtube.com/@alexmesherina" target="_blank">*notes</a>
-  <a href="https://instagram.com/alexmesherina" target="_blank">*reels</a>
-  <a href="https://instagram.com/kinostudiaaa" target="_blank">*instagram</a>
-  <a href="https://linkedin.com/company/kinostudiaaa" target="_blank">*linkedin</a>
-  <a href="mailto:alexmesherina@gmail.com">*nights</a>
-</div>
+  <!-- MOBILE: vertical list -->
+  <div class="map-mobile">
+    <a href="#" id="mob-films" class="mob-node" style="animation-delay:0.20s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*films</span><span class="mob-sub">short films · mv</span></span>
+    </a>
+    <a href="#" id="mob-publications" class="mob-node" style="animation-delay:0.28s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*publications</span><span class="mob-sub">digital zines</span></span>
+    </a>
+    <a href="#" id="mob-notes" class="mob-node" target="_blank" style="animation-delay:0.34s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*notes</span><span class="mob-sub">founder podcast</span></span>
+    </a>
+    <a href="#" id="mob-reels" class="mob-node" target="_blank" style="animation-delay:0.40s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*reels</span><span class="mob-sub">founder bts</span></span>
+    </a>
+    <a href="#" id="mob-instagram" class="mob-node" target="_blank" style="animation-delay:0.46s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*instagram</span><span class="mob-sub">portfolio · events · community</span></span>
+    </a>
+    <a href="#" id="mob-linkedin" class="mob-node" target="_blank" style="animation-delay:0.52s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*linkedin</span><span class="mob-sub">manifesto · updates</span></span>
+    </a>
+    <a href="#" id="mob-nights" class="mob-node" style="animation-delay:0.58s">
+      <span class="mob-dot"></span>
+      <span><span class="mob-lbl">*nights</span><span class="mob-sub">in-person screenings</span></span>
+    </a>
+  </div>
 
-<script>
-  const canvas = document.getElementById('mapCanvas');
-  const container = document.getElementById('mapContainer');
+  <script>
+    /* ── LINK MAP ─────────────────────────────────────────────────────────────
+       Drop your URLs here. external: true opens in a new tab.
+       Leave href as '' to make a node inactive (no navigation).
+    ─────────────────────────────────────────────────────────────────────────── */
+    const LINKS = {
+      films:        { href: '/films.html',                                         external: false },
+      publications: { href: '/publications.html',                                  external: false },
+      notes:        { href: 'https://youtube.com/@alexmesherina',                  external: true  },
+      reels:        { href: 'https://instagram.com/alexmesherina',                 external: true  },
+      instagram:    { href: 'https://instagram.com/kinostudiaaa',                  external: true  },
+      linkedin:     { href: 'https://linkedin.com/company/kinostudiaaa',           external: true  },
+      nights:       { href: 'mailto:alexmesherina@gmail.com?subject=KINOSTUDIAAA*%20Nights', external: false },
+    };
+    /* ──────────────────────────────────────────────────────────────────────── */
 
-  let isDragging = false;
-  let startX, startY;
-  let x = 0, y = 0;
+    /* Apply links to mobile nodes */
+    Object.entries(LINKS).forEach(([key, { href, external }]) => {
+      const el = document.getElementById('mob-' + key);
+      if (el && href) {
+        el.href = href;
+        if (external) el.target = '_blank';
+      }
+    });
 
-  container.addEventListener('mousedown', e => {
-    isDragging = true;
-    startX = e.clientX - x;
-    startY = e.clientY - y;
-  });
+    /* PAN / DRAG SYSTEM WITH MOMENTUM */
+    const container = document.getElementById('mapContainer');
+    const canvas    = document.getElementById('mapCanvas');
+    const CW = 1800, CH = 1100;
 
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    x = e.clientX - startX;
-    y = e.clientY - startY;
-    canvas.style.transform = `translate(${x}px, ${y}px)`;
-  });
+    let panX = (window.innerWidth  - CW) / 2;
+    let panY = (window.innerHeight - CH) / 2;
+    let isDragging = false;
+    let startX, startY;
+    let velX = 0, velY = 0;
+    let lastTime = 0;
+    let rafId = null;
 
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-</script>
+    function applyTransform() {
+      canvas.style.transform = `translate(${panX}px, ${panY}px)`;
+    }
+    applyTransform();
+
+    function runMomentum() {
+      velX *= 0.91;
+      velY *= 0.91;
+      if (Math.abs(velX) > 0.15 || Math.abs(velY) > 0.15) {
+        panX += velX;
+        panY += velY;
+        applyTransform();
+        rafId = requestAnimationFrame(runMomentum);
+      }
+    }
+
+    /* Mouse */
+    container.addEventListener('mousedown', e => {
+      if (e.target.closest('.mn[data-node]')) return;
+      cancelAnimationFrame(rafId);
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      velX = velY = 0;
+      lastTime = performance.now();
+      container.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const now = performance.now();
+      const dt  = Math.max(1, now - lastTime);
+      const nx  = e.clientX - startX;
+      const ny  = e.clientY - startY;
+      velX = (nx - panX) / dt * 14;
+      velY = (ny - panY) / dt * 14;
+      panX = nx;
+      panY = ny;
+      lastTime = now;
+      applyTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      container.classList.remove('is-dragging');
+      rafId = requestAnimationFrame(runMomentum);
+    });
+
+    /* Wheel */
+    container.addEventListener('wheel', e => {
+      e.preventDefault();
+      cancelAnimationFrame(rafId);
+      panX -= e.deltaX * 0.75;
+      panY -= e.deltaY * 0.75;
+      applyTransform();
+    }, { passive: false });
+
+    /* Touch */
+    let touchStartX, touchStartY, lastTX, lastTY;
+
+    container.addEventListener('touchstart', e => {
+      cancelAnimationFrame(rafId);
+      const t = e.touches[0];
+      touchStartX = t.clientX - panX;
+      touchStartY = t.clientY - panY;
+      lastTX = t.clientX;
+      lastTY = t.clientY;
+      velX = velY = 0;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      velX = (t.clientX - lastTX) * 0.85;
+      velY = (t.clientY - lastTY) * 0.85;
+      panX = t.clientX - touchStartX;
+      panY = t.clientY - touchStartY;
+      lastTX = t.clientX;
+      lastTY = t.clientY;
+      applyTransform();
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => {
+      rafId = requestAnimationFrame(runMomentum);
+    });
+
+    /* NODE INTERACTIONS */
+    document.querySelectorAll('.mn[data-node]').forEach(node => {
+      const nodeKey  = node.dataset.node;
+      const lineId   = node.dataset.line;
+      const line     = lineId ? document.getElementById(lineId) : null;
+      const linkData = LINKS[nodeKey];
+
+      /* Brighten connecting line on hover */
+      if (line) {
+        node.addEventListener('mouseenter', () => line.classList.add('lit'));
+        node.addEventListener('mouseleave', () => line.classList.remove('lit'));
+      }
+
+      /* Navigate on click */
+      if (linkData && linkData.href && nodeKey !== 'centre') {
+        let pointerDownX, pointerDownY;
+
+        node.addEventListener('pointerdown', e => {
+          pointerDownX = e.clientX;
+          pointerDownY = e.clientY;
+        });
+
+        node.addEventListener('click', e => {
+          if (Math.abs(e.clientX - pointerDownX) + Math.abs(e.clientY - pointerDownY) > 6) return;
+          e.stopPropagation();
+          node.style.transition = 'transform 0.1s ease';
+          node.style.transform  = 'scale(0.85)';
+          setTimeout(() => {
+            node.style.transform = '';
+            if (linkData.external || linkData.href.startsWith('mailto')) {
+              window.open(linkData.href, '_blank');
+            } else {
+              window.location.href = linkData.href;
+            }
+          }, 120);
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
