@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KINOSTUDIAAA*</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -23,16 +23,6 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      mix-blend-mode: overlay;
-    }
-
     .map-container {
       position: fixed;
       inset: 0;
@@ -44,7 +34,6 @@
       cursor: grabbing;
     }
 
-    /* CENTER FIXED PROPERLY */
     .map-canvas {
       position: absolute;
       width: 1200px;
@@ -61,24 +50,20 @@
     /* LINES */
     .ml {
       stroke: var(--cream);
-      stroke-width: 0.65;
+      stroke-width: 0.6;
       fill: none;
       opacity: 0.25;
     }
 
     /* NODES */
-    .mn {
-      cursor: pointer;
-    }
-
     .mn circle {
-      fill: var(--cream);
-      opacity: 0.85 !important;
+      fill: var(--cream) !important;
+      opacity: 0.85;
     }
 
     .mn text {
-      pointer-events: none;
       fill: var(--cream);
+      pointer-events: none;
     }
 
     .lbl {
@@ -112,60 +97,74 @@
       <line class="ml" x1="900" y1="548" x2="658" y2="758"/>
       <line class="ml" x1="900" y1="548" x2="984" y2="856"/>
 
-      <!-- CENTER -->
+      <!-- CENTER (FIXED COLOR) -->
       <g class="mn">
-        <circle cx="900" cy="548" r="4"></circle>
+        <circle cx="900" cy="548" r="4" fill="var(--cream)"/>
         <text class="lbl" x="900" y="533" text-anchor="middle">KINOSTUDIAAA*</text>
       </g>
 
       <!-- FILMS -->
-      <g class="mn" onclick="window.location.href='/films.html'">
-        <circle cx="1180" cy="302" r="14"></circle>
-        <text class="lbl" x="1195" y="297">*films</text>
-        <text class="sub" x="1195" y="310">short films · mv</text>
-      </g>
+      <a href="/films.html">
+        <g class="mn">
+          <circle cx="1180" cy="302" r="14"/>
+          <text class="lbl" x="1195" y="297">*films</text>
+          <text class="sub" x="1195" y="310">short films · mv</text>
+        </g>
+      </a>
 
       <!-- INSTAGRAM -->
-      <g class="mn" onclick="window.open('https://instagram.com/kinostudiaaa','_blank')">
-        <circle cx="1428" cy="222" r="3"></circle>
-        <text class="lbl" x="1441" y="217">*instagram</text>
-        <text class="sub" x="1441" y="231">portfolio · events</text>
-      </g>
+      <a href="https://instagram.com/kinostudiaaa" target="_blank">
+        <g class="mn">
+          <circle cx="1428" cy="222" r="3"/>
+          <text class="lbl" x="1441" y="217">*instagram</text>
+          <text class="sub" x="1441" y="231">portfolio · events</text>
+        </g>
+      </a>
 
       <!-- PUBLICATIONS -->
-      <g class="mn" onclick="window.location.href='/publications.html'">
-        <circle cx="1252" cy="714" r="3"></circle>
-        <text class="lbl" x="1265" y="709">*publications</text>
-        <text class="sub" x="1265" y="723">digital zines</text>
-      </g>
+      <a href="/publications.html">
+        <g class="mn">
+          <circle cx="1252" cy="714" r="3"/>
+          <text class="lbl" x="1265" y="709">*publications</text>
+          <text class="sub" x="1265" y="723">digital zines</text>
+        </g>
+      </a>
 
       <!-- NOTES -->
-      <g class="mn" onclick="window.open('https://youtube.com/@alexmesherina','_blank')">
-        <circle cx="552" cy="316" r="3"></circle>
-        <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
-        <text class="sub" x="539" y="320" text-anchor="end">founder podcast</text>
-      </g>
+      <a href="https://youtube.com/@alexmesherina" target="_blank">
+        <g class="mn">
+          <circle cx="552" cy="316" r="3"/>
+          <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
+          <text class="sub" x="539" y="320" text-anchor="end">founder podcast</text>
+        </g>
+      </a>
 
       <!-- REELS -->
-      <g class="mn" onclick="window.open('https://instagram.com/alexmesherina','_blank')">
-        <circle cx="388" cy="570" r="3"></circle>
-        <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
-        <text class="sub" x="375" y="574" text-anchor="end">founder bts</text>
-      </g>
+      <a href="https://instagram.com/alexmesherina" target="_blank">
+        <g class="mn">
+          <circle cx="388" cy="570" r="3"/>
+          <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
+          <text class="sub" x="375" y="574" text-anchor="end">bts</text>
+        </g>
+      </a>
 
       <!-- LINKEDIN -->
-      <g class="mn" onclick="window.open('https://linkedin.com/company/kinostudiaaa','_blank')">
-        <circle cx="658" cy="758" r="3"></circle>
-        <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
-        <text class="sub" x="645" y="762" text-anchor="end">updates</text>
-      </g>
+      <a href="https://linkedin.com/company/kinostudiaaa" target="_blank">
+        <g class="mn">
+          <circle cx="658" cy="758" r="3"/>
+          <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
+          <text class="sub" x="645" y="762" text-anchor="end">updates</text>
+        </g>
+      </a>
 
       <!-- NIGHTS -->
-      <g class="mn" onclick="window.location.href='mailto:alexmesherina@gmail.com?subject=KINOSTUDIAAA*'">
-        <circle cx="984" cy="856" r="3"></circle>
-        <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
-        <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
-      </g>
+      <a href="mailto:alexmesherina@gmail.com?subject=KINOSTUDIAAA*">
+        <g class="mn">
+          <circle cx="984" cy="856" r="3"/>
+          <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
+          <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
+        </g>
+      </a>
 
     </svg>
   </div>
