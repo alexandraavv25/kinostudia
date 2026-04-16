@@ -1,222 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KINOSTUDIAAA*</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --cream: #F0EDE4;
-  --red: #8B0000;
+  --cream:#F0EDE4;
+  --red:#8B0000;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { box-sizing:border-box; margin:0; }
 
-html, body {
-  width:100%; height:100%;
-  overflow:hidden;
+body {
   background:var(--red);
   font-family:'Space Grotesk', sans-serif;
-}
-
-/* MAP */
-.map-container {
-  position:fixed;
-  inset:0;
   overflow:hidden;
 }
 
-.map-canvas {
-  position:absolute;
-  width:1800px;
-  height:1100px;
-  left:0;
-  top:0;
+/* CANVAS */
+.wrap {
+  position:fixed;
+  inset:0;
 }
 
-/* LINES */
-.ml {
-  stroke:var(--cream);
-  stroke-width:1;
-  opacity:0.35;
-  fill:none;
+canvas {
+  width:100%;
+  height:100%;
 }
 
 /* NODES */
-.mn { cursor:pointer; }
+.node {
+  position:absolute;
+  transform:translate(-50%,-50%);
+  text-decoration:none;
+  color:var(--cream);
+}
 
-/* circles — fixed */
-.mn circle.dot {
-  fill:var(--cream);
+/* dot */
+.node::before {
+  content:'';
+  position:absolute;
+  left:-10px;
+  top:50%;
+  transform:translateY(-50%);
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--cream);
   opacity:0.9;
 }
 
-/* TEXT */
-.mn .lbl {
-  font-size:11px;
-  letter-spacing:0.15em;
-  fill:var(--cream);
-  transition:transform 0.2s ease, opacity 0.2s;
+/* text */
+.label {
+  font-size:12px;
+  letter-spacing:0.18em;
 }
 
-.mn .sub {
-  font-size:8px;
-  fill:var(--cream);
-  opacity:0.5;
-  transition:transform 0.2s ease, opacity 0.2s;
+.sub {
+  font-family:'DM Sans', sans-serif;
+  font-size:10px;
+  opacity:0.45;
 }
 
-/* ONLY TEXT MOVES */
-.mn:hover .lbl,
-.mn:hover .sub {
+/* interaction */
+.node:hover .label,
+.node:hover .sub {
   transform:translateY(-2px);
   opacity:1;
+}
+
+.label, .sub {
+  transition:all .2s ease;
+}
+
+/* centre stronger */
+.centre .label {
+  font-size:14px;
+  letter-spacing:0.25em;
+}
+
+/* subtle grain */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="map-container" id="mapContainer">
-<div class="map-canvas" id="mapCanvas">
+<canvas id="lines"></canvas>
 
-<svg viewBox="0 0 1800 1100">
-
-<!-- ALL CONNECTED -->
-<line class="ml" x1="900" y1="548" x2="1180" y2="302"/>
-<line class="ml" x1="900" y1="548" x2="1428" y2="222"/>
-<line class="ml" x1="900" y1="548" x2="1252" y2="714"/>
-<line class="ml" x1="900" y1="548" x2="552" y2="316"/>
-<line class="ml" x1="900" y1="548" x2="388" y2="570"/>
-<line class="ml" x1="900" y1="548" x2="658" y2="758"/>
-<line class="ml" x1="900" y1="548" x2="984" y2="856"/>
+<div class="wrap">
 
 <!-- CENTRE -->
-<g class="mn">
-  <circle class="dot" cx="900" cy="548" r="4"/>
-  <text class="lbl" x="900" y="533" text-anchor="middle">KINOSTUDIAAA*</text>
-</g>
-
-<!-- FILMS -->
-<a href="/kinostudia/films.html">
-<g class="mn">
-  <rect x="1140" y="270" width="240" height="90" fill="transparent"/>
-  <circle class="dot" cx="1180" cy="302" r="3"/>
-  <text class="lbl" x="1195" y="297">*films</text>
-  <text class="sub" x="1195" y="310">short films · mv</text>
-</g>
+<a class="node centre" style="left:50%; top:50%">
+  <div class="label">KINOSTUDIAAA*</div>
 </a>
 
-<!-- INSTAGRAM -->
-<a href="https://instagram.com/kinostudiaaa" target="_blank">
-<g class="mn">
-  <rect x="1390" y="190" width="260" height="90" fill="transparent"/>
-  <circle class="dot" cx="1428" cy="222" r="3"/>
-  <text class="lbl" x="1441" y="217">*instagram</text>
-  <text class="sub" x="1441" y="231">portfolio · events</text>
-</g>
+<!-- RIGHT CLUSTER -->
+<a href="/kinostudia/films.html" class="node" style="left:70%; top:30%">
+  <div class="label">*films</div>
+  <div class="sub">short films · mv</div>
 </a>
 
-<!-- PUBLICATIONS -->
-<a href="kinostudia/publications.html">
-<g class="mn">
-  <rect x="1210" y="680" width="240" height="90" fill="transparent"/>
-  <circle class="dot" cx="1252" cy="714" r="3"/>
-  <text class="lbl" x="1265" y="709">*publications</text>
-  <text class="sub" x="1265" y="723">digital zines</text>
-</g>
+<a href="https://instagram.com/kinostudiaaa" target="_blank" class="node" style="left:82%; top:22%">
+  <div class="label">*instagram</div>
+  <div class="sub">portfolio · events</div>
 </a>
 
-<!-- NOTES -->
-<a href="https://youtube.com/@alexmesherina" target="_blank">
-<g class="mn">
-  <rect x="300" y="280" width="260" height="90" fill="transparent"/>
-  <circle class="dot" cx="552" cy="316" r="3"/>
-  <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
-  <text class="sub" x="539" y="320" text-anchor="end">podcast</text>
-</g>
+<a href="kinostudia/publications.html" class="node" style="left:72%; top:68%">
+  <div class="label">*publications</div>
+  <div class="sub">digital zines</div>
 </a>
 
-<!-- REELS -->
-<a href="https://instagram.com/alexmesherina" target="_blank">
-<g class="mn">
-  <rect x="200" y="540" width="260" height="90" fill="transparent"/>
-  <circle class="dot" cx="388" cy="570" r="3"/>
-  <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
-  <text class="sub" x="375" y="574" text-anchor="end">bts</text>
-</g>
+<!-- LEFT CLUSTER -->
+<a href="https://youtube.com/@alexmesherina" target="_blank" class="node" style="left:30%; top:28%">
+  <div class="label">*notes</div>
+  <div class="sub">podcast</div>
 </a>
 
-<!-- LINKEDIN -->
-<a href="https://linkedin.com/company/kinostudiaaa" target="_blank">
-<g class="mn">
-  <rect x="420" y="720" width="260" height="90" fill="transparent"/>
-  <circle class="dot" cx="658" cy="758" r="3"/>
-  <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
-  <text class="sub" x="645" y="762" text-anchor="end">updates</text>
-</g>
+<a href="https://instagram.com/alexmesherina" target="_blank" class="node" style="left:20%; top:55%">
+  <div class="label">*reels</div>
+  <div class="sub">bts</div>
 </a>
 
-<!-- NIGHTS -->
-<a href="mailto:alexmesherina@gmail.com">
-<g class="mn">
-  <rect x="880" y="820" width="220" height="90" fill="transparent"/>
-  <circle class="dot" cx="984" cy="856" r="3"/>
-  <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
-  <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
-</g>
+<a href="https://linkedin.com/company/kinostudiaaa" target="_blank" class="node" style="left:35%; top:75%">
+  <div class="label">*linkedin</div>
+  <div class="sub">updates</div>
 </a>
 
-</svg>
-</div>
+<!-- BOTTOM -->
+<a href="mailto:alexmesherina@gmail.com" class="node" style="left:55%; top:85%">
+  <div class="label">*nights</div>
+  <div class="sub">screenings</div>
+</a>
+
 </div>
 
 <script>
-const canvas = document.getElementById('mapCanvas');
+const canvas = document.getElementById('lines');
+const ctx = canvas.getContext('2d');
 
-const CW = 1800;
-const CH = 1100;
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-let panX = 0;
-let panY = 0;
-
-/* CENTER MAP */
-function centerMap() {
-  panX = (window.innerWidth - CW) / 2;
-  panY = (window.innerHeight - CH) / 2;
-  applyTransform();
+function getPos(el) {
+  const r = el.getBoundingClientRect();
+  return {
+    x: r.left + r.width/2,
+    y: r.top + r.height/2
+  };
 }
 
-function applyTransform() {
-  canvas.style.transform = `translate(${panX}px, ${panY}px)`;
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const nodes = document.querySelectorAll('.node');
+
+  const centre = document.querySelector('.centre');
+
+  const connections = [
+    // centre connections
+    [centre, nodes[1]],
+    [centre, nodes[2]],
+    [centre, nodes[3]],
+    [centre, nodes[4]],
+    [centre, nodes[5]],
+    [centre, nodes[6]],
+
+    // cross-links (makes it feel alive)
+    [nodes[1], nodes[2]],
+    [nodes[4], nodes[5]],
+    [nodes[3], nodes[6]]
+  ];
+
+  connections.forEach(([a,b], i) => {
+    const p1 = getPos(a);
+    const p2 = getPos(b);
+
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+
+    ctx.strokeStyle = "rgba(240,237,228," + (0.2 + Math.random()*0.2) + ")";
+    ctx.lineWidth = i < 6 ? 1 : 0.6; // hierarchy
+    ctx.stroke();
+  });
+
+  requestAnimationFrame(draw);
 }
 
-centerMap();
-window.addEventListener('resize', centerMap);
-
-/* DRAG */
-let isDragging = false;
-let startX, startY;
-
-document.getElementById('mapContainer').addEventListener('mousedown', e => {
-  isDragging = true;
-  startX = e.clientX - panX;
-  startY = e.clientY - panY;
-});
-
-window.addEventListener('mousemove', e => {
-  if (!isDragging) return;
-  panX = e.clientX - startX;
-  panY = e.clientY - startY;
-  applyTransform();
-});
-
-window.addEventListener('mouseup', () => {
-  isDragging = false;
-});
+draw();
 </script>
 
 </body>
