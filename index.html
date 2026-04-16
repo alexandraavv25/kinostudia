@@ -4,100 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KINOSTUDIAAA*</title>
-  <meta name="description" content="KINOSTUDIAAA* — a women-led film studio." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       --cream: #F0EDE4;
-      --red:   #8B0000;
+      --red: #8B0000;
     }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       background: var(--red);
       font-family: 'Space Grotesk', sans-serif;
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='22' font-family='serif' font-weight='bold' fill='%23F0EDE4' text-anchor='middle'%3E*%3C/text%3E%3C/svg%3E") 12 12, default;
     }
 
     body::before {
       content: '';
-      position: fixed; inset: 0; z-index: 5;
+      position: fixed;
+      inset: 0;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-      background-size: 256px;
-      opacity: 0.5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      opacity: 0.4;
       mix-blend-mode: overlay;
     }
 
-    .site-title {
-      position: fixed;
-      top: 2rem; left: 2.5rem;
-      z-index: 100;
-      font-weight: 600;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      color: var(--cream);
-      text-decoration: none;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.2s forwards;
-    }
-
-    .drag-hint {
-      position: fixed;
-      bottom: 2rem; right: 2.5rem;
-      z-index: 100;
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      color: rgba(240, 237, 228, 0.35);
-      opacity: 0;
-      animation: fadeIn 1s ease 2.5s forwards;
-    }
-
     .map-container {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       overflow: hidden;
-      z-index: 10;
       cursor: grab;
     }
 
-    .map-container.is-dragging { cursor: grabbing; }
+    .map-container.is-dragging {
+      cursor: grabbing;
+    }
 
+    /* CENTER FIXED PROPERLY */
     .map-canvas {
       position: absolute;
       width: 1200px;
-      height: auto;
+      height: 1100px;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
     }
 
-    svg { width: 100%; height: 100%; }
+    svg {
+      width: 100%;
+      height: 100%;
+    }
 
+    /* LINES */
     .ml {
       stroke: var(--cream);
       stroke-width: 0.65;
       fill: none;
-      opacity: 0.3;
+      opacity: 0.25;
     }
 
+    /* NODES */
     .mn {
       cursor: pointer;
-      transition: transform 0.22s ease;
-      transform-box: fill-box;
-      transform-origin: center;
-      opacity: 1;
     }
 
-    .mn:hover { transform: scale(1.1); }
-
-    .mn circle.dot {
+    .mn circle {
       fill: var(--cream);
-      opacity: 0.85;
+      opacity: 0.85 !important;
     }
 
     .mn text {
@@ -117,21 +93,17 @@
       letter-spacing: 0.05em;
       opacity: 0.55;
     }
-
-    @keyframes fadeIn { to { opacity: 1; } }
   </style>
 </head>
 
 <body>
-
-<a href="index.html" class="site-title">KINOSTUDIAAA*</a>
-<span class="drag-hint">drag to explore</span>
 
 <div class="map-container" id="mapContainer">
   <div class="map-canvas" id="mapCanvas">
 
     <svg viewBox="0 0 1800 1100">
 
+      <!-- LINES -->
       <line class="ml" x1="900" y1="548" x2="1180" y2="302"/>
       <line class="ml" x1="1180" y1="302" x2="1428" y2="222"/>
       <line class="ml" x1="900" y1="548" x2="1252" y2="714"/>
@@ -142,77 +114,99 @@
 
       <!-- CENTER -->
       <g class="mn">
-        <circle cx="900" cy="548" r="4"/>
+        <circle cx="900" cy="548" r="4"></circle>
         <text class="lbl" x="900" y="533" text-anchor="middle">KINOSTUDIAAA*</text>
       </g>
 
       <!-- FILMS -->
-      <a href="/films.html">
-        <g class="mn">
-          <circle cx="1180" cy="302" r="14" fill="transparent"/>
-          <circle class="dot" cx="1180" cy="302" r="3"/>
-          <text class="lbl" x="1195" y="297">*films</text>
-          <text class="sub" x="1195" y="310">short films · mv</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.location.href='/films.html'">
+        <circle cx="1180" cy="302" r="14"></circle>
+        <text class="lbl" x="1195" y="297">*films</text>
+        <text class="sub" x="1195" y="310">short films · mv</text>
+      </g>
 
       <!-- INSTAGRAM -->
-      <a href="https://instagram.com/kinostudiaaa" target="_blank">
-        <g class="mn">
-          <circle class="dot" cx="1428" cy="222" r="3"/>
-          <text class="lbl" x="1441" y="217">*instagram</text>
-          <text class="sub" x="1441" y="231">portfolio · events</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.open('https://instagram.com/kinostudiaaa','_blank')">
+        <circle cx="1428" cy="222" r="3"></circle>
+        <text class="lbl" x="1441" y="217">*instagram</text>
+        <text class="sub" x="1441" y="231">portfolio · events</text>
+      </g>
 
       <!-- PUBLICATIONS -->
-      <a href="/publications.html">
-        <g class="mn">
-          <circle class="dot" cx="1252" cy="714" r="3"/>
-          <text class="lbl" x="1265" y="709">*publications</text>
-          <text class="sub" x="1265" y="723">digital zines</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.location.href='/publications.html'">
+        <circle cx="1252" cy="714" r="3"></circle>
+        <text class="lbl" x="1265" y="709">*publications</text>
+        <text class="sub" x="1265" y="723">digital zines</text>
+      </g>
 
       <!-- NOTES -->
-      <a href="https://youtube.com/@alexmesherina" target="_blank">
-        <g class="mn">
-          <circle class="dot" cx="552" cy="316" r="3"/>
-          <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
-          <text class="sub" x="539" y="320" text-anchor="end">founder podcast</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.open('https://youtube.com/@alexmesherina','_blank')">
+        <circle cx="552" cy="316" r="3"></circle>
+        <text class="lbl" x="539" y="306" text-anchor="end">*notes</text>
+        <text class="sub" x="539" y="320" text-anchor="end">founder podcast</text>
+      </g>
 
       <!-- REELS -->
-      <a href="https://instagram.com/alexmesherina" target="_blank">
-        <g class="mn">
-          <circle class="dot" cx="388" cy="570" r="3"/>
-          <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
-          <text class="sub" x="375" y="574" text-anchor="end">founder bts</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.open('https://instagram.com/alexmesherina','_blank')">
+        <circle cx="388" cy="570" r="3"></circle>
+        <text class="lbl" x="375" y="560" text-anchor="end">*reels</text>
+        <text class="sub" x="375" y="574" text-anchor="end">founder bts</text>
+      </g>
 
       <!-- LINKEDIN -->
-      <a href="https://linkedin.com/company/kinostudiaaa" target="_blank">
-        <g class="mn">
-          <circle class="dot" cx="658" cy="758" r="3"/>
-          <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
-          <text class="sub" x="645" y="762" text-anchor="end">updates</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.open('https://linkedin.com/company/kinostudiaaa','_blank')">
+        <circle cx="658" cy="758" r="3"></circle>
+        <text class="lbl" x="645" y="748" text-anchor="end">*linkedin</text>
+        <text class="sub" x="645" y="762" text-anchor="end">updates</text>
+      </g>
 
       <!-- NIGHTS -->
-      <a href="mailto:alexmesherina@gmail.com">
-        <g class="mn">
-          <circle class="dot" cx="984" cy="856" r="3"/>
-          <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
-          <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
-        </g>
-      </a>
+      <g class="mn" onclick="window.location.href='mailto:alexmesherina@gmail.com?subject=KINOSTUDIAAA*'">
+        <circle cx="984" cy="856" r="3"></circle>
+        <text class="lbl" x="984" y="874" text-anchor="middle">*nights</text>
+        <text class="sub" x="984" y="888" text-anchor="middle">screenings</text>
+      </g>
 
     </svg>
   </div>
 </div>
+
+<script>
+  const container = document.getElementById('mapContainer');
+  const canvas = document.getElementById('mapCanvas');
+
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let x = 0;
+  let y = 0;
+
+  function applyTransform() {
+    canvas.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+  }
+
+  applyTransform();
+
+  container.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.mn')) return;
+    isDragging = true;
+    startX = e.clientX - x;
+    startY = e.clientY - y;
+    container.classList.add('is-dragging');
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    x = e.clientX - startX;
+    y = e.clientY - startY;
+    applyTransform();
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    container.classList.remove('is-dragging');
+  });
+</script>
 
 </body>
 </html>
